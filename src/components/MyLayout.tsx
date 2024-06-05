@@ -10,10 +10,12 @@ import {
 import type { MenuProps } from 'antd';
 import {message,Space,Breadcrumb, Dropdown, Layout, Menu, theme } from 'antd';
 import  logo  from '../assets/HDU_LOGO.png';
-import { SettingFilled } from '@ant-design/icons';
+import { SettingFilled,PicRightOutlined } from '@ant-design/icons';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import LayerControl from './LayerControl';
+import MyDrawerLeft from './MyDrawerLeft';
+import MyDrawerRight from './MyDrawerRight'
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -101,6 +103,11 @@ const menuItems: MenuItem[] = [
     getItem('Relief-F互相关性分析', '5'),
      getItem('t-检验', '6')]),
   getItem('模型构建', '7', <FileOutlined />),
+  getItem('其他功能', 'sub3', <PicRightOutlined />, [
+    getItem('地图发布', '8'),
+    getItem('各环节方法API', '9'),
+    getItem('预览图', '10'),
+  ]),
 ];
 
 
@@ -121,6 +128,7 @@ const MyLayout= ({children}:any) => {
         <Menu theme="dark" defaultSelectedKeys={['1']} mode="vertical" items={menuItems} />
       </Sider>
       <Layout>
+        {/* 顶部 */}
         <Header style={{ padding: 0, background: '#001529',height: '49px',lineHeight:'46px' ,color: '#000' }} >
         <span className='titleDev'>多场景病虫害预测系统</span>
 
@@ -133,30 +141,27 @@ const MyLayout= ({children}:any) => {
         </Dropdown>
         </Header>
 
+        {/* 中部内容 */}
         <Content style={{ margin: '0 0px'}}>
-          <Breadcrumb style={{ margin: '0px 0' }}>
-            {/* <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
-          </Breadcrumb>
-          <div>
-
-          </div>
+          {/* <Breadcrumb style={{ margin: '0px 0' }}>
+            <Breadcrumb.Item>User</Breadcrumb.Item>
+            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+          </Breadcrumb> */}
           <div
-          
             style={{
               padding: 0,
               minHeight: 360,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
-              
             }}
           >
-            
+
             {/* Bill is a cat. */}
             {children}
             
           
             <MapContainer center={[30.315284, 120.338]} zoom={17} scrollWheelZoom={false}>
+            {/* <MapContainer center={[31.163856, 119.668872]} zoom={17} scrollWheelZoom={false}> */}
   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -169,7 +174,11 @@ const MyLayout= ({children}:any) => {
   </Marker> */}
 </MapContainer>
           </div>
+          {/* <MyDrawerLeft>
+          </MyDrawerLeft> */}
+          <MyDrawerRight>
 
+          </MyDrawerRight>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
