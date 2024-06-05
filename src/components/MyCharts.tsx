@@ -1,43 +1,47 @@
+import  { useEffect } from 'react';
 import { Chart } from '@antv/g2';
 
-const MyCharts= ({children}:any) => {
-  const data = [
-    { name: 'London', 月份: 'Jan.', 月均降雨量: 18.9 },
-    { name: 'London', 月份: 'Feb.', 月均降雨量: 28.8 },
-    { name: 'London', 月份: 'Mar.', 月均降雨量: 39.3 },
-    { name: 'London', 月份: 'Apr.', 月均降雨量: 81.4 },
-    { name: 'London', 月份: 'May', 月均降雨量: 47 },
-    { name: 'London', 月份: 'Jun.', 月均降雨量: 20.3 },
-    { name: 'London', 月份: 'Jul.', 月均降雨量: 24 },
-    { name: 'London', 月份: 'Aug.', 月均降雨量: 35.6 },
-    { name: 'Berlin', 月份: 'Jan.', 月均降雨量: 12.4 },
-    { name: 'Berlin', 月份: 'Feb.', 月均降雨量: 23.2 },
-    { name: 'Berlin', 月份: 'Mar.', 月均降雨量: 34.5 },
-    { name: 'Berlin', 月份: 'Apr.', 月均降雨量: 99.7 },
-    { name: 'Berlin', 月份: 'May', 月均降雨量: 52.6 },
-    { name: 'Berlin', 月份: 'Jun.', 月均降雨量: 35.5 },
-    { name: 'Berlin', 月份: 'Jul.', 月均降雨量: 37.4 },
-    { name: 'Berlin', 月份: 'Aug.', 月均降雨量: 42.4 },
-  ];
-  
-  const chart = new Chart({
-    container: 'container',
-    autoFit: true,
-  });
-  
-  chart
-    .interval()
-    .data(data)
-    .encode('x', '月份')
-    .encode('y', '月均降雨量')
-    .encode('color', 'name')
-    .transform({ type: 'stackY' })
-    .interaction('elementHighlight', { background: true });
-  
-  chart.render();
- 
+import data from '../assets/Accumulated precipitation.json'
+
+
+const MyCharts = () => {
+  useEffect(() => {
+    // const data = [
+    //   { letter: 'A', frequency: 0.08167 },
+    //   { letter: 'B', frequency: 0.01492 },
+    //   { letter: 'C', frequency: 0.02782 },
+    //   { letter: 'D', frequency: 0.04253 },
+    // ];
+    
+    const chart = new Chart({
+      container: 'container',
+      autoFit: true,
+    });
+    
+    chart
+      .interval()
+      .data(data)
+      .encode('x', '测报站点')
+      .encode('y', '05-20_05-27_降水累积量')
+      .encode('color', '年')
+      .transform({ type: 'dodgeX' })
+      .interaction('elementHighlight', { background: true });
+    
+    chart.title({title:'部分县市不同年份05-20至05-27降水累积量',align:'center' });
+    // 图例位置
+    chart.legend('color', {
+      /** 让图例在水平和垂直方向上保持居中 */
+      layout: {
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        flexDirection: 'column',
+      }});
+    chart.render();
+
+  }, []);
+
   return (
-    <div id='container'>{children}</div>
+    <div id="container"></div>
   );
 };
 

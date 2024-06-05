@@ -4,8 +4,11 @@ import MyCharts from './components/MyCharts'
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import React, { useState } from 'react';
 import './App.css'; // 引入CSS文件
+import { Chart } from '@antv/g2';
+import data1 from '../assets/Accumulated precipitation.json'
 
 function App() {
+
   return (
     
   //   <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
@@ -21,16 +24,17 @@ function App() {
   // </MapContainer>
 
   // 主页
-   <MyLayout>
-   </MyLayout>
+  //  <MyLayout>
+  //  </MyLayout>
 
   // 地图
   // <MyMap>
     
   // </MyMap>
-// 热力图
-/* <MyCharts>
-</MyCharts> */
+// 统计图
+ <MyCharts>
+ </MyCharts>
+
 
   /* <h1>HelloWorld</h1> */
 
@@ -40,5 +44,6 @@ function App() {
   
   )
 }
+
 
 export default App
