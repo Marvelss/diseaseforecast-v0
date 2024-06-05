@@ -16,6 +16,7 @@ import 'leaflet/dist/leaflet.css';
 import LayerControl from './LayerControl';
 import MyDrawerLeft from './MyDrawerLeft';
 import MyDrawerRight from './MyDrawerRight'
+import MyFloatButton from './MyFloatButton'
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -180,6 +181,10 @@ const MyLayout= ({children}:any) => {
           {/* 右边侧边栏  */}
           <MyDrawerRight>
           </MyDrawerRight>
+
+          <MyFloatButton>
+
+          </MyFloatButton>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
