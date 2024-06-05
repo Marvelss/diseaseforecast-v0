@@ -1,7 +1,9 @@
 import MyLayout from "./components/MyLayout"
-import IndexPage from "./components/map"
+import MyMap from "./components/MyMap"
+import MyCharts from './components/MyCharts'
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
-
+import React, { useState } from 'react';
+import './App.css'; // 引入CSS文件
 
 function App() {
   return (
@@ -17,9 +19,20 @@ function App() {
   //     </Popup>
   //   </Marker> */}
   // </MapContainer>
+
+  // 主页
    <MyLayout>
-   {/* <h1>HelloWorld</h1> */}
    </MyLayout>
+
+  // 地图
+  // <MyMap>
+    
+  // </MyMap>
+// 热力图
+/* <MyCharts>
+</MyCharts> */
+
+  /* <h1>HelloWorld</h1> */
 
   //  <IndexPage>
 

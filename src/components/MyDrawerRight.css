@@ -1,0 +1,26 @@
+/* .App {
+  position: relative;
+  height: 100vh;
+} */
+
+.toggle-button {
+  position: absolute;
+  left: -80px; /* 将按钮放置在 div 左侧 */
+  top: 50%;
+  z-index: 1000;
+}
+
+.sliding-div {
+  position: fixed;
+  top: 0;
+  right: -300px; /* 初始位置在视野之外 */
+  width: 300px;
+  height: 100%;
+  background-color: lightblue;
+  transition: right 0.3s ease;
+  z-index: 999;
+}
+
+.sliding-div.visible {
+  right: 0; /* 当添加visible类时，滑出屏幕 */
+}
