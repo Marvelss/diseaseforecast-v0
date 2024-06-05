@@ -174,10 +174,11 @@ const MyLayout= ({children}:any) => {
   </Marker> */}
 </MapContainer>
           </div>
-          {/* <MyDrawerLeft>
-          </MyDrawerLeft> */}
+          {/* 左边侧边栏 */}
+           <MyDrawerLeft>
+          </MyDrawerLeft>
+          {/* 右边侧边栏  */}
           <MyDrawerRight>
-
           </MyDrawerRight>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

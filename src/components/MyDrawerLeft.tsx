@@ -16,11 +16,11 @@ const toggleDiv = () => {
 
 return (
   <div className="MyDrawerLeftDiv">
-    <div className={`sliding-div ${isVisible ? 'visible' : ''}`}>
-      <button className="toggle-button" onClick={toggleDiv}>
-        Toggle Div
+    <div className={`sliding-div-left ${isVisible ? 'visible' : ''}`}>
+      <button className="toggle-button-left" onClick={toggleDiv}>
+        打开左边侧边栏
       </button>
-      This is a sliding div.
+      <h2><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>显示各环节数据处理或模型参数</h2>
     </div>
   </div>
 ); 

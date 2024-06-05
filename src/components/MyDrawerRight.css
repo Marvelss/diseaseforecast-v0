@@ -13,9 +13,11 @@
 .sliding-div {
   position: fixed;
   top: 0;
+  margin-top: 49px;
   right: -300px; /* 初始位置在视野之外 */
   width: 300px;
   height: 100%;
+  opacity: 0.7;
   background-color: lightblue;
   transition: right 0.3s ease;
   z-index: 999;

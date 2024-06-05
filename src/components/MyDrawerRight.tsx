@@ -17,9 +17,11 @@ return (
   <div className="App">
     <div className={`sliding-div ${isVisible ? 'visible' : ''}`}>
       <button className="toggle-button" onClick={toggleDiv}>
-        Toggle Div
+        右边侧边栏
       </button>
-      This is a sliding div.
+      <h2><br/><br/>显示：图层编辑|任务清单|结果</h2>
+
+      
     </div>
   </div>
 ); 
