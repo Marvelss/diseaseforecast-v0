@@ -20,7 +20,7 @@ return (
       <button className="toggle-button-left" onClick={toggleDiv}>
         打开左边侧边栏
       </button>
-      <h2><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>显示各环节数据处理或模型参数</h2>
+      <h2><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>显示：文件选择|图层控制</h2>
     </div>
   </div>
 ); 

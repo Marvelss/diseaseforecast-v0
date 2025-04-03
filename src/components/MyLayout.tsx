@@ -92,25 +92,49 @@ function getItem(
   } as MenuItem;
 }
 
-const menuItems: MenuItem[] = [
+// const menuItems: MenuItem[] = [
+//   getItem('主页', '0', <BorderInnerOutlined />),
+//   getItem('原始数据', '1', <PieChartOutlined />),
+//   getItem('数据预处理', '2', <DesktopOutlined />),
+//   getItem('特征计算', 'sub1', <UserOutlined />, [
+//     getItem('时空抽取', '3'),
+//     getItem('降水累积量计算', '4'),
+//   ]),
+//   getItem('特征优选', 'sub2', <TeamOutlined />, [
+//     getItem('Relief-F互相关性分析', '5'),
+//      getItem('t-检验', '6')]),
+//   getItem('模型构建', '7', <FileOutlined />),
+//   getItem('其他功能', 'sub3', <PicRightOutlined />, [
+//     getItem('地图发布', '8'),
+//     getItem('各环节方法API', '9'),
+//     getItem('预览图', '10'),
+//   ]),
+// ];
+
+
+const leftMenuItems: MenuItem[] = [
   getItem('主页', '0', <BorderInnerOutlined />),
-  getItem('原始数据', '1', <PieChartOutlined />),
-  getItem('数据预处理', '2', <DesktopOutlined />),
-  getItem('特征计算', 'sub1', <UserOutlined />, [
+  getItem('作物病虫害建模', '1', <PieChartOutlined />),
+  getItem('模型应用', '2', <DesktopOutlined />),
+  getItem('气象情景模拟与模型评价', 'sub1', <UserOutlined />, [
     getItem('时空抽取', '3'),
     getItem('降水累积量计算', '4'),
   ]),
-  getItem('特征优选', 'sub2', <TeamOutlined />, [
+];
+
+const rightMenuItems: MenuItem[] = [
+
+  getItem('API接口服务', 'sub2', <TeamOutlined />, [
     getItem('Relief-F互相关性分析', '5'),
      getItem('t-检验', '6')]),
-  getItem('模型构建', '7', <FileOutlined />),
-  getItem('其他功能', 'sub3', <PicRightOutlined />, [
+  getItem('产品应用服务', 'sub5', <FileOutlined />),
+  getItem('产品交互分析', '7', <FileOutlined />),
+  getItem('用户中心', 'sub3', <PicRightOutlined />, [
     getItem('地图发布', '8'),
     getItem('各环节方法API', '9'),
     getItem('预览图', '10'),
   ]),
 ];
-
 
 
 
@@ -126,20 +150,34 @@ const MyLayout= ({children}:any) => {
      id='components-layout-demo-custom-trigger'>
       <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
         <div className="logo" ><img src={logo}/></div>
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="vertical" items={menuItems} />
+        {/* <Menu theme="dark" defaultSelectedKeys={['1']} mode="vertical" items={menuItems} /> */}
+
       </Sider>
       <Layout>
         {/* 顶部 */}
-        <Header style={{ padding: 0, background: '#001529',height: '49px',lineHeight:'46px' ,color: '#000' }} >
-        <span className='titleDev'>多场景病虫害预测系统</span>
+        {/* <Header style={{ padding: 0, background: '#001529',height: '49px',lineHeight:'46px' ,color: '#000' }} >
+        <span className='titleDev'>多场景病虫害预测系统</span> */}
+
+    {/* 顶部 */}
+    <Header style={{ padding: -20, background: '#001529', height: '59px', lineHeight: '46px', color: '#fff' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
+        {/* 左侧菜单 */}
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} items={leftMenuItems} style={{ lineHeight: '49px', flex: 1 }} />
+        {/* 标题 */}
+        <div style={{ flex: 2, textAlign: 'center', color: '#fff', fontSize: '35px', fontWeight: 'bold' }}>
+          多场景作物病虫害预测系统
+        </div>
+        {/* 右侧菜单 */}
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} items={rightMenuItems} style={{ lineHeight: '49px', flex: 1 }} />
 
         <Dropdown menu={{ items, onClick }}>
           
-        <a onClick={(e)=>e.preventDefault()} style={{float:'right',margin:'0 50px 0 0'}}>
+        <a onClick={(e)=>e.preventDefault()} style={{float:'right',margin:'0 50px 0 50px'}}>
 
         <SettingFilled style={{ fontSize: '16px', color: '#000' }} />
         </a>
         </Dropdown>
+        </div>
         </Header>
 
         {/* 中部内容 */}
@@ -163,17 +201,31 @@ const MyLayout= ({children}:any) => {
           
             <MapContainer center={[30.315284, 120.338]} zoom={17} scrollWheelZoom={false}>
             {/* <MapContainer center={[31.163856, 119.668872]} zoom={17} scrollWheelZoom={false}> */}
-  <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
+            {/* <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            /> */}
+            {/* <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+            /> */}
+             {/* ArcGIS/ESRI 全球影像 */}
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            />
+            
 
-  {/* <Marker position={[51.505, -0.09]}>
-    <Popup>
-      A pretty CSS3 popup. <br /> Easily customizable.
-    </Popup>
-  </Marker> */}
-</MapContainer>
+          {/* <Marker position={[51.505, -0.09]}>
+            <Popup>
+              A pretty CSS3 popup. <br /> Easily customizable.
+            </Popup>
+          </Marker> */}
+          </MapContainer>
+
+
+
+
           </div>
           {/* 左边侧边栏 */}
            <MyDrawerLeft>

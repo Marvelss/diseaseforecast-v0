@@ -24,16 +24,16 @@ function App() {
   // </MapContainer>
 
   // 主页
-  //  <MyLayout>
-  //  </MyLayout>
+   <MyLayout>
+   </MyLayout>
 
   // 地图
   // <MyMap>
     
   // </MyMap>
 // 统计图
- <MyCharts>
- </MyCharts>
+//  <MyCharts>
+//  </MyCharts>
 
 
   /* <h1>HelloWorld</h1> */

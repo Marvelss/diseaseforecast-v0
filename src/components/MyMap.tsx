@@ -9,7 +9,7 @@ const MyMap= ({children}:any) => {
   const scene = new Scene({
     id: 'map',
     map: new GaodeMap({
-      style: 'dark',
+      style: 'satellite',
       token: '260b817b6d70ad050c0771e725c321a4',
       center: [120.347, 29.265],
       zoom: 5.5,
@@ -41,6 +41,11 @@ const MyMap= ({children}:any) => {
           positions: [22, 42, 62, 85, 100,110],
         },
       });
+          // 添加卫星地图适配的视觉优化
+    layer.style({
+      opacity: 0.8,  // 提高透明度避免完全遮盖卫星图
+      blend: 'normal' // 标准混合模式
+    });
     scene.addLayer(layer);
   // });
   });
