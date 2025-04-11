@@ -1,7 +1,7 @@
 .MyDrawerLeftDiv {
   position: fixed;
   left: 0;
-  top: 42px; /* 避免溢出到顶部标题，设置顶部距离为标题高度 */
+  top: 59px; /* 避免溢出到顶部标题，设置顶部距离为标题高度 */
   height: calc(100vh - 59px); /* 调整高度，减去顶部标题的高度 */
   z-index: 999;
 }
@@ -15,6 +15,7 @@
   transform: translateX(-100%);
   border-top-right-radius: 8px; /* 添加圆角 */
   border-bottom-right-radius: 8px;
+  padding: 10px; /* 添加内边距 */
 }
 
 .sliding-div-left.visible {
@@ -38,6 +39,23 @@
 
 .toggle-button-left:hover {
   background-color: #34495e; /* 悬停时的背景色 */
+}
+
+/* 添加 Tabs 样式 */
+.ant-tabs-nav {
+  background-color: rgba(44, 62, 80, 0.7);
+}
+
+.ant-tabs-nav .ant-tabs-tab {
+  color: #ecf0f1;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #fff;
+}
+
+.ant-tabs-content {
+  color: #ecf0f1;
 }
 
 .sliding-div-left h2 {
