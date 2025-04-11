@@ -1,32 +1,48 @@
-/* 抽屉效果 */
+.MyDrawerLeftDiv {
+  position: fixed;
+  left: 0;
+  top: 42px; /* 避免溢出到顶部标题，设置顶部距离为标题高度 */
+  height: calc(100vh - 59px); /* 调整高度，减去顶部标题的高度 */
+  z-index: 999;
+}
 
-  /* 将按钮放置在 div 左侧 */
-  .toggle-button-left {
-    position: absolute;
-    /* left: 190px;  */
-    right: -110px;
-    top: 50%;
-    z-index: 1000;
-  }
-  
-  /* 初始位置在视野之外 */
-  .sliding-div-left {
-    position: fixed;
-    top: 0;
-    /* right: -500px;  */
-    /* right: 200px;  */
-    margin-top: 58px;
-    left:-100px;
-    width: 300px;
-    height: 100%;
-    opacity: 0.5;
-    background-color: lightblue;
-    /* transition: right 0.3s ease; */
-    transition: left 0.3s ease;
-    z-index: 999;
-  }
-  /* 当添加visible类时，滑出屏幕 */
-  .sliding-div-left.visible {
-    /* right:300px; */
-    left: 80px; 
-  } 
+.sliding-div-left {
+  width: 250px;
+  height: 100%;
+  background-color: rgba(44, 62, 80, 0.7); /* 更具质感的背景色 */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); /* 加深阴影效果 */
+  transition: all 0.3s ease;
+  transform: translateX(-100%);
+  border-top-right-radius: 8px; /* 添加圆角 */
+  border-bottom-right-radius: 8px;
+}
+
+.sliding-div-left.visible {
+  transform: translateX(0);
+}
+
+.toggle-button-left {
+  position: absolute;
+  right: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(44, 62, 80, 0.8); /* 与侧边栏背景色一致 */
+  border: none;
+  padding: 10px;
+  border-radius: 0 5px 5px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  color: #ecf0f1; /* 按钮文字颜色 */
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button-left:hover {
+  background-color: #34495e; /* 悬停时的背景色 */
+}
+
+.sliding-div-left h2 {
+  padding: 20px;
+  color: #ecf0f1; /* 标题文字颜色 */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 更换字体 */
+  border-bottom: 1px solid #34495e; /* 添加底部边框 */
+}

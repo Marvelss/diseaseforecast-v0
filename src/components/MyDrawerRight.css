@@ -1,28 +1,44 @@
-/* .App {
-  position: relative;
-  height: 100vh;
-} */
-
-.toggle-button {
-  position: absolute;
-  left: -80px; /* 将按钮放置在 div 左侧 */
-  top: 50%;
-  z-index: 1000;
-}
-
 .sliding-div {
   position: fixed;
-  top: 0;
-  margin-top: 58px;
-  right: -300px; /* 初始位置在视野之外 */
-  width: 300px;
-  height: 100%;
-  opacity: 0.7;
-  background-color: lightblue;
-  transition: right 0.3s ease;
+  right: 0;
+  top: 59px; 
+  width: 250px;
+  height: calc(100vh - 59px); 
+  background-color: rgba(44, 62, 80, 0.7); /* 添加30%透明度 */
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3); 
+  transition: all 0.3s ease;
+  transform: translateX(100%);
+  border-top-left-radius: 8px; 
+  border-bottom-left-radius: 8px;
   z-index: 999;
 }
 
 .sliding-div.visible {
-  right: 0; /* 当添加visible类时，滑出屏幕 */
+  transform: translateX(0);
+}
+
+.toggle-button {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(44, 62, 80, 0.8); /* 添加30%透明度 */
+  border: none;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  color: #ecf0f1; 
+  transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+  background-color: #34495e; /* 悬停时的背景色 */
+}
+
+.sliding-div h2 {
+  padding: 20px;
+  color: #ecf0f1; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  border-bottom: 1px solid rgba(52, 73, 94, 0.3); /* 添加30%透明度 */
 }
