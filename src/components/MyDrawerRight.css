@@ -2,7 +2,7 @@
   position: fixed;
   right: 0;
   top: 59px; 
-  width: 250px;
+  width: 350px;
   height: calc(100vh - 59px); 
   background-color: rgba(44, 62, 80, 0.7); /* 添加30%透明度 */
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3); 
@@ -40,5 +40,61 @@
   padding: 20px;
   color: #ecf0f1; 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-  border-bottom: 1px solid rgba(52, 73, 94, 0.3); /* 添加30%透明度 */
+  border-bottom: 1px solid rgba(52, 73, 94, 0.3); 
+}
+
+/* Tabs 样式 */
+.ant-tabs-nav {
+  padding-left: 10px;
+  background-color: rgba(44, 62, 80, 0.7); 
+  color: #ecf0f1; 
+}
+
+.ant-tabs-tab {
+  color: #ecf0f1; 
+}
+
+.ant-tabs-tab-active {
+  color: #fff; 
+}
+
+.ant-tabs-ink-bar {
+  background-color: #fff; 
+}
+
+.ant-tabs-content {
+  padding: 10px;
+  color: #ecf0f1; 
+}
+.setting-group {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #ecf0f1;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.setting-group label {
+  width: 90px;
+  font-weight: 500;
+}
+
+.setting-group input,
+.setting-group .ant-select {
+  flex: 1;
+}
+
+.add-task-button {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #1abc9c;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+.add-task-button:hover {
+  background-color: #16a085;
 }
