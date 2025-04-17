@@ -5,13 +5,46 @@ import './MyDrawerRight.css';
 const { TabPane } = Tabs;
 const { Option } = Select;
 
-// 模拟任务清单数据
-const initialTaskListData: { id: number; name: string; status: string }[] = [
-  { id: 1, name: 'Task 1', status: 'In Progress' },
-  { id: 2, name: 'Task 2', status: 'Completed' },
-  { id: 3, name: 'Task 3', status: 'Pending' },
-  { id: 4, name: 'Task 4', status: 'Pending' },
-  { id: 5, name: 'Task 5', status: 'Pending' },
+// 模拟任务清单数据，与数据库表结构匹配
+const initialTaskListData: { 
+  modelId: number; 
+  modelMethod: string; 
+  modelMethodParam: string; 
+  features: string; 
+  label: string; 
+  evaluationMetrics: string; 
+  datasetSplitRatio: string; 
+  modelStructure: string; 
+  trainingResult: string; 
+  createTime: string; 
+  modelStatus: number; 
+}[] = [
+  {
+    modelId: 1,
+    modelMethod: 'SVM',
+    modelMethodParam: 'kernel=rbf, C=1.0, gamma=0.1',
+    features: 'FPAR1, LAI, 降水',
+    label: '病害发生情况',
+    evaluationMetrics: 'accuracy, recall',
+    datasetSplitRatio: '7:2:1',
+    modelStructure: '2 hidden layers with 10 neurons each',
+    trainingResult: '',
+    createTime: new Date().toISOString(),
+    modelStatus: 1 // 1: Pending
+  },
+  {
+    modelId: 2,
+    modelMethod: 'Random Forest',
+    modelMethodParam: 'n_estimators=100, max_depth=10',
+    features: '温度1, 降水1, 降水2',
+    label: '病害发生等级',
+    evaluationMetrics: 'precision, f1-score',
+    datasetSplitRatio: '8:1:1',
+    modelStructure: 'N/A',
+    trainingResult: 'Accuracy: 0.85',
+    createTime: new Date().toISOString(),
+    modelStatus: 2 // 2: Completed
+  }
 ];
 
 // 预处理方法列表
@@ -44,9 +77,17 @@ function MyDrawerRight() {
   const addTask = () => {
     if (newTaskName) {
       const newTask = {
-        id: taskListData.length + 1,
-        name: newTaskName,
-        status: 'Pending'
+        modelId: taskListData.length + 1,
+        modelMethod: 'New Method',
+        modelMethodParam: `${param1}, ${param2}`,
+        features: 'default features',
+        label: 'default label',
+        evaluationMetrics: 'default metrics',
+        datasetSplitRatio: '7:2:1',
+        modelStructure: 'default structure',
+        trainingResult: '',
+        createTime: new Date().toISOString(),
+        modelStatus: 1 // 1: Pending
       };
       setTaskListData([...taskListData, newTask]);
       setNewTaskName('');
@@ -80,9 +121,17 @@ function MyDrawerRight() {
       if (!hasEmpty) {
         const paramString = requiredParams.join(', ');
         const newTask = {
-          id: taskListData.length + 1,
-          name: `Task with ${selectedMethod} (${paramString})`,
-          status: 'Pending',
+          modelId: taskListData.length + 1,
+          modelMethod: selectedMethod,
+          modelMethodParam: paramString,
+          features: 'default features',
+          label: 'default label',
+          evaluationMetrics: 'default metrics',
+          datasetSplitRatio: '7:2:1',
+          modelStructure: 'default structure',
+          trainingResult: '',
+          createTime: new Date().toISOString(),
+          modelStatus: 1 // 1: Pending
         };
         setTaskListData([...taskListData, newTask]);
         setSelectedMethod(null);
@@ -92,43 +141,120 @@ function MyDrawerRight() {
     }
   };
 
+  // 转换 modelStatus 为文字描述
+  const getStatusText = (status: number) => {
+    switch (status) {
+      case 1:
+        return 'Pending';
+      case 2:
+        return 'Completed';
+      case 3:
+        return 'Failed';
+      default:
+        return 'Unknown';
+    }
+  };
+
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
+      title: '模型ID',
+      dataIndex: 'modelId',
+      key: 'modelId',
     },
     {
-      title: '任务名称',
-      dataIndex: 'name',
-      key: 'name',
+      title: '模型方法',
+      dataIndex: 'modelMethod',
+      key: 'modelMethod',
+    },
+    {
+      title: '模型参数',
+      dataIndex: 'modelMethodParam',
+      key: 'modelMethodParam',
+    },
+    {
+      title: '特征',
+      dataIndex: 'features',
+      key: 'features',
+    },
+    {
+      title: '标签',
+      dataIndex: 'label',
+      key: 'label',
+    },
+    {
+      title: '评估指标',
+      dataIndex: 'evaluationMetrics',
+      key: 'evaluationMetrics',
+    },
+    {
+      title: '数据集划分比例',
+      dataIndex: 'datasetSplitRatio',
+      key: 'datasetSplitRatio',
+    },
+    {
+      title: '模型结构',
+      dataIndex: 'modelStructure',
+      key: 'modelStructure',
+    },
+    {
+      title: '训练结果',
+      dataIndex: 'trainingResult',
+      key: 'trainingResult',
+    },
+    {
+      title: '创建时间',
+      dataIndex: 'createTime',
+      key: 'createTime',
     },
     {
       title: '状态',
-      dataIndex: 'status',
-      key: 'status',
+      key: 'modelStatus',
+      // render: (_, record) => getStatusText(record.modelStatus)
     },
   ];
 
   // 定义执行任务的函数
   const executeTasks = async () => {
     try {
-      // 假设任务列表中的每个任务的 id 作为 modelIdList
-      const modelIdList = taskListData.map(task => task.id.toString());
-      const modelIdListStr = modelIdList.join(',');
-      const apiUrl = `http://localhost:8092/model-building-dataset/model-train/${modelIdListStr}`;
-
+      // 假设使用第一个任务的信息作为统一的模型信息
+      if (taskListData.length === 0) {
+        console.warn('任务列表为空，无法执行任务');
+        return;
+      }
+      const firstTask = taskListData[0];
+      // 将 modelId 转换为字符串类型
+      const modelIds = taskListData.map(task => task.modelId.toString()); 
+      const modelParams: Record<string, string> = {};
+      firstTask.modelMethodParam.split(', ').forEach(param => {
+        const [key, value] = param.split('=');
+        modelParams[key] = value;
+      });
+  
+      const requestBody = {
+        modelIds: modelIds,
+        model: firstTask.modelMethod,
+        modelParams: modelParams,
+        features: firstTask.features.split(', '),
+        label: firstTask.label,
+        evaluationMetrics: firstTask.evaluationMetrics.split(', '),
+        datasetSplitRatio: firstTask.datasetSplitRatio,
+        modelStructure: firstTask.modelStructure
+      };
+  
+      const apiUrl = 'http://localhost:8092/model-building-dataset/model-train';
+  
       const response = await fetch(apiUrl, {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify(requestBody),
       });
-      console.log('点击运行');
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+  
       const data = await response.text();
       console.log('执行任务成功:', data);
     } catch (error) {
@@ -188,7 +314,13 @@ function MyDrawerRight() {
             </Button>
           </TabPane>
           <TabPane tab="任务清单" key="2">
-            <Table dataSource={taskListData} columns={columns} style={{ marginTop: 20 }} />
+            {/* 设置 scroll.x 让表格支持横向滚动 */}
+            <Table 
+              dataSource={taskListData} 
+              columns={columns} 
+              style={{ marginTop: 20 }}
+              scroll={{ x: 1500 }} // 根据实际情况调整 x 的值
+            />
             {/* 添加执行按钮 */}
             <Button className="execute-button" onClick={executeTasks}>
               执行任务
