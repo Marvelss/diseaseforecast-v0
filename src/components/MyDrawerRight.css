@@ -98,3 +98,16 @@
 .add-task-button:hover {
   background-color: #16a085;
 }
+
+.execute-button {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #3498db;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+.execute-button:hover {
+  background-color: #2980b9;
+}
