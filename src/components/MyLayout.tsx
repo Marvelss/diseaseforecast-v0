@@ -71,10 +71,7 @@ const leftMenuItems: MenuItem[] = [
   getItem('主页', '0', <BorderInnerOutlined />),
   getItem('作物病虫害建模', '1', <PieChartOutlined />),
   getItem('模型应用', '2', <DesktopOutlined />),
-  getItem('气象情景模拟与模型评价', 'sub1', <UserOutlined />, [
-    getItem('时空抽取', '3'),
-    getItem('降水累积量计算', '4'),
-  ]),
+  getItem('气象情景模拟与模型评价', '3', <UserOutlined />),
 ];
 
 const rightMenuItems: MenuItem[] = [
@@ -82,13 +79,17 @@ const rightMenuItems: MenuItem[] = [
   getItem('API接口服务', 'sub2', <TeamOutlined />, [
     getItem('Relief-F互相关性分析', '5'),
      getItem('t-检验', '6')]),
-  getItem('产品应用服务', 'sub5', <FileOutlined />),
-  getItem('产品交互分析', '7', <FileOutlined />),
-  getItem('用户中心', 'sub3', <PicRightOutlined />, [
+  getItem('产品应用服务', 'sub3', <TeamOutlined />, [
+    getItem('专题图制作', '7'),
     getItem('地图发布', '8'),
-    getItem('各环节方法API', '9'),
-    getItem('预览图', '10'),
+    getItem('数据下载中心', '9'),
+    getItem('建模报告', '10'),
   ]),
+  getItem('产品交互分析', 'sub4', <FileOutlined />, [
+    getItem('热力图分析', '11'),
+    getItem('病害发生路径分析', '12'),
+    getItem('卷帘看图', '13')]),
+  getItem('用户中心', '14', <PicRightOutlined />)
 ];
 
 
