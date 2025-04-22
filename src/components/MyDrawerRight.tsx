@@ -326,14 +326,6 @@ function MyDrawerRight() {
               执行任务
             </Button>
           </TabPane>
-          <TabPane tab="结果预览" key="3">
-            <div>
-              <span>结果概述: 这是结果的概述。</span>
-            </div>
-            <div>
-              <span>详细结果: 这些是详细的结果...</span>
-            </div>
-          </TabPane>
         </Tabs>
       </div>
     </div>

@@ -1,0 +1,20 @@
+/* 自定义步骤条的图标和连接线颜色 */
+.custom-steps .ant-steps-item-process .ant-steps-item-icon {
+  background: green;
+  border-color: green;
+}
+
+.custom-steps .ant-steps-item-finish .ant-steps-item-icon {
+  background: green;
+  border-color: green;
+}
+
+.custom-steps .ant-steps-item-finish .ant-steps-item-tail::after {
+  background-color: green;
+}
+
+/* 调整步骤条的标题和描述颜色 */
+.custom-steps .ant-steps-item-title,
+.custom-steps .ant-steps-item-description {
+  color: #fff; /* 设置为白色以与背景形成对比 */
+}
