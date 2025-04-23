@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Tabs, Select, Input, Button, Table } from 'antd';
 import './MyDrawerRight.css'; 
+import { message } from 'antd';
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -56,7 +57,7 @@ function MyDrawerRight() {
   const [param1, setParam1] = useState('');
   const [param2, setParam2] = useState('');
   const [taskListData, setTaskListData] = useState(initialTaskListData);
-  const [newTaskName, setNewTaskName] = useState('');
+  // const [newTaskName, setNewTaskName] = useState('');
 
   const toggleDiv = () => {
     setIsVisible(!isVisible);
@@ -66,33 +67,33 @@ function MyDrawerRight() {
     setSelectedMethod(value);
   };
 
-  const handleParam1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setParam1(e.target.value);
-  };
+  // const handleParam1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setParam1(e.target.value);
+  // };
 
-  const handleParam2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setParam2(e.target.value);
-  };
+  // const handleParam2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setParam2(e.target.value);
+  // };
 
-  const addTask = () => {
-    if (newTaskName) {
-      const newTask = {
-        modelId: taskListData.length + 1,
-        modelMethod: 'New Method',
-        modelMethodParam: `${param1}, ${param2}`,
-        features: 'default features',
-        label: 'default label',
-        evaluationMetrics: 'default metrics',
-        datasetSplitRatio: '7:2:1',
-        modelStructure: 'default structure',
-        trainingResult: '',
-        createTime: new Date().toISOString(),
-        modelStatus: 1 // 1: Pending
-      };
-      setTaskListData([...taskListData, newTask]);
-      setNewTaskName('');
-    }
-  };
+  // const addTask = () => {
+  //   if (newTaskName) {
+  //     const newTask = {
+  //       modelId: taskListData.length + 1,
+  //       modelMethod: 'New Method',
+  //       modelMethodParam: `${param1}, ${param2}`,
+  //       features: 'default features',
+  //       label: 'default label',
+  //       evaluationMetrics: 'default metrics',
+  //       datasetSplitRatio: '7:2:1',
+  //       modelStructure: 'default structure',
+  //       trainingResult: '',
+  //       createTime: new Date().toISOString(),
+  //       modelStatus: 1 // 1: Pending
+  //     };
+  //     setTaskListData([...taskListData, newTask]);
+  //     setNewTaskName('');
+  //   }
+  // };
 
   const methodParamsMap: {
     [key: string]: { label: string; placeholder: string; stateKey: string }[];
@@ -238,7 +239,10 @@ function MyDrawerRight() {
         label: firstTask.label,
         evaluationMetrics: firstTask.evaluationMetrics.split(', '),
         datasetSplitRatio: firstTask.datasetSplitRatio,
-        modelStructure: firstTask.modelStructure
+        modelStructure: firstTask.modelStructure,
+        // trainingResult: firstTask.trainingResult,
+        // createTime: firstTask.createTime,
+        modelStatus: 1
       };
   
       const apiUrl = 'http://localhost:8092/model-building-dataset/model-train';
@@ -257,8 +261,12 @@ function MyDrawerRight() {
   
       const data = await response.text();
       console.log('执行任务成功:', data);
+      // 弹出成功提示框
+      message.success('模型训练任务已成功提交');
     } catch (error) {
       console.error('执行任务失败:', error);
+      // 弹出失败提示框
+      message.error('执行任务失败，请稍后重试');
     }
   };
 

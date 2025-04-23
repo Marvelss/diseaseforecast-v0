@@ -190,7 +190,7 @@ const MyLayout= ({children}:any) => {
             }}
           >
             {children}
-            <MapContainer center={[30.315284, 120.338]} zoom={17} scrollWheelZoom={false} style={{ height: '100%' }}> 
+            <MapContainer center={[30.177794, 120.031156]} zoom={17} scrollWheelZoom={false} style={{ height: '100%' }}> 
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
