@@ -8,7 +8,7 @@ const { Option } = Select;
 
 // 模拟任务清单数据，与数据库表结构匹配
 const initialTaskListData: { 
-  modelId: number; 
+  modelId: string; 
   modelMethod: string; 
   modelMethodParam: string; 
   features: string; 
@@ -21,7 +21,7 @@ const initialTaskListData: {
   modelStatus: number; 
 }[] = [
   {
-    modelId: 1,
+    modelId: "3a",
     modelMethod: 'SVM',
     modelMethodParam: 'kernel=rbf, C=1.0, gamma=0.1',
     features: 'FPAR1, LAI, 降水',
@@ -34,7 +34,7 @@ const initialTaskListData: {
     modelStatus: 1 // 1: Pending
   },
   {
-    modelId: 2,
+    modelId: "3a",
     modelMethod: 'Random Forest',
     modelMethodParam: 'n_estimators=100, max_depth=10',
     features: '温度1, 降水1, 降水2',
@@ -232,6 +232,7 @@ function MyDrawerRight() {
       });
   
       const requestBody = {
+        userId:1,
         modelIds: modelIds,
         model: firstTask.modelMethod,
         modelParams: modelParams,
@@ -244,6 +245,7 @@ function MyDrawerRight() {
         // createTime: firstTask.createTime,
         modelStatus: 1
       };
+      console.log('前端提交的任务:', JSON.stringify(requestBody));
   
       const apiUrl = 'http://localhost:8092/model-building-dataset/model-train';
   
@@ -254,7 +256,7 @@ function MyDrawerRight() {
         },
         body: JSON.stringify(requestBody),
       });
-  
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
