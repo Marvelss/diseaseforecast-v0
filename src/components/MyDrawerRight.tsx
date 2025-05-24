@@ -34,7 +34,7 @@ const initialTaskListData: {
     modelStatus: 1 // 1: Pending
   },
   {
-    modelId: "3a",
+    modelId: "3b",
     modelMethod: 'Random Forest',
     modelMethodParam: 'n_estimators=100, max_depth=10',
     features: '温度1, 降水1, 降水2',
@@ -262,13 +262,13 @@ function MyDrawerRight() {
       }
   
       const data = await response.text();
-      console.log('执行任务成功:', data);
+      console.log('已成功提交:', data);
       // 弹出成功提示框
       message.success('模型训练任务已成功提交');
     } catch (error) {
-      console.error('执行任务失败:', error);
+      console.error('提交执行任务失败:', error);
       // 弹出失败提示框
-      message.error('执行任务失败，请稍后重试');
+      message.error('提交执行任务失败，请稍后重试');
     }
   };
 

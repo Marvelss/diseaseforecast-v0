@@ -11,7 +11,9 @@ import type { MenuProps } from 'antd';
 import {message,Space,Breadcrumb, Dropdown, Layout, Menu, theme, Steps } from 'antd'; 
 import  logo  from '../assets/HDU_LOGO.png';
 import { SettingFilled,PicRightOutlined } from '@ant-design/icons';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+// import { MapContainer, TileLayer, LayersControl,useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, LayersControl, Marker, CircleMarker, Popup } from 'react-leaflet';
+const { BaseLayer, Overlay } = LayersControl;
 import 'leaflet/dist/leaflet.css';
 import LayerControl from './LayerControl';
 import MyDrawerLeft from './MyDrawerLeft';
@@ -20,7 +22,32 @@ import MyFloatButton from './MyFloatButton'
 // 引入 CSS 文件
 import './MyLayout.css'; 
 
+
 const { Header, Content, Footer, Sider } = Layout;
+
+
+// 模拟病虫害监测点数据
+const center = [30.183594, 120.030156];
+const range = 0.003; // zoom17下合理的经纬度偏移范围（约±300米）
+
+const generateRandomPoints = (center, count, range) => {
+  const points = [];
+  for (let i = 1; i <= count; i++) {
+    const lat = center[0] + (Math.random() * 1 - 1) * range;
+    const lng = center[1] + (Math.random() * 2 - 1) * range;
+    const severity = Math.floor(Math.random() * 5) + 1; // 1到5
+    points.push({
+      id: i,
+      position: [lat, lng],
+      severity,
+      description: `虫害等级${severity}`,
+    });
+  }
+  return points;
+};
+
+const pestPoints = generateRandomPoints(center, 50, range);
+
 
 
 const onClick: MenuProps['onClick'] = ({ key }) => {
@@ -190,13 +217,47 @@ const MyLayout= ({children}:any) => {
             }}
           >
             {children}
-            <MapContainer center={[30.177794, 120.031156]} zoom={17} scrollWheelZoom={false} style={{ height: '100%' }}> 
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            <MapContainer center={[30.181594, 120.031156]} zoom={17} scrollWheelZoom={false} style={{ height: '100%' }}>
+      <LayersControl position="topright">
+
+        {/* 底图 */}
+        <BaseLayer checked name="Esri 卫星图">
+          <TileLayer
+            attribution='&copy; OpenStreetMap contributors'
+            url="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          />
+        </BaseLayer>
+
+        {/* MODIS NDVI 图层 */}
+        <Overlay checked name="MODIS Land Cover">
+          <TileLayer
+            url="https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_NDVI/default/2023-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png"
+            attribution="NASA GIBS"
+            opacity={0.6}
+          />
+        </Overlay>
+
+        {/* 病虫害监测点 */}
+        <Overlay checked name="病虫害监测点">
+          {pestPoints.map(({ id, position, severity, description }) => (
+            <React.Fragment key={id}>
+              <Marker position={position}>
+                <Popup>{description}</Popup>
+              </Marker>
+              <CircleMarker
+                center={position}
+                radius={severity * 4}
+                pathOptions={{ color: 'red', fillColor: 'red', fillOpacity: 0.5 }}
               />
-            </MapContainer>
-          </div>
+            </React.Fragment>
+          ))}
+        </Overlay>
+
+      </LayersControl>
+    </MapContainer>
+  
+  </div>
+
           <MyDrawerLeft />
           <MyDrawerRight />
           <MyFloatButton />
