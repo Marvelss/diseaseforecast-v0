@@ -1,34 +1,34 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-// 保持原有引用
-import MyLayout from "./components/MyLayout";
-import MyMap from "./components/MyMap";
-import MyCharts from './components/MyCharts';
-import { MapContainer, TileLayer } from 'react-leaflet';
-import { useState } from 'react';
-import './App.css'; // 引入CSS文件
-import { Chart } from '@antv/g2';
-import data1 from '../assets/Accumulated precipitation.json';
-
-// 新增：用户中心页面
+import { Routes, Route, Outlet } from 'react-router-dom';
+import MyLayout from './components/MyLayout';
+import MyMap from './components/MyMap';
 import UserCenter from './pages/UserCenter';
+import './App.css';
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                {/* 主页 */}
-                <Route path="/" element={<MyLayout />} />
+        <Routes>
+            {/* 主布局路由 */}
+            <Route
+                path="/"
+                element={
+                    <MyLayout>
+                        {/* 添加路由出口 */}
+                        <Outlet />
+                    </MyLayout>
+                }
+            >
+                {/* 默认主页 - 显示地图 */}
+                <Route index element={<MyMap />} />
 
-                {/* 用户中心 */}
-                <Route path="/usercenter" element={<UserCenter />} />
+                {/* 用户中心页面 */}
+                <Route path="usercenter" element={<UserCenter />} />
+            </Route>
 
-                {/* 默认 fallback */}
-                <Route path="*" element={null} />
-            </Routes>
-        </Router>
-    )
+            {/* 404处理 */}
+            <Route path="*" element={<div>404 Not Found</div>} />
+        </Routes>
+    );
 }
 
 /*

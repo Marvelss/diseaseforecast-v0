@@ -103,7 +103,7 @@ const items: MenuProps['items'] = [
   { label: '记录', key: '5' },
 ];
 
-const MyLayout = () => {
+const MyLayout: React.FC = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [showSteps, setShowSteps] = useState(false);
   const {
@@ -137,19 +137,65 @@ const MyLayout = () => {
       <Layout style={{ width: '100vw', height: '100vh', overflow: 'hidden' }} id="components-layout-demo-custom-trigger">
         <Layout style={{ height: '100vh' }}>
           {!showSteps ? (
-              <Header style={{ padding: 0, background: '#001529', height: '59px', lineHeight: '59px', color: '#fff' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
-                  <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} items={leftMenuItems} style={{ lineHeight: '59px', flex: 1 }} onClick={onClick} />
-                  <div style={{ flex: 2, textAlign: 'center', color: '#fff', fontSize: '27px', fontWeight: 'bold' }}>
-                    多场景作物病虫害预测系统
-                  </div>
-                  <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']} items={rightMenuItems} style={{ lineHeight: '59px', flex: 1 }} onClick={onClick} />
-                  <Dropdown menu={{ items, onClick }}>
-                    <a onClick={(e) => e.preventDefault()} style={{ float: 'right', margin: '0 50px 0 50px' }}>
-                      <SettingFilled style={{ fontSize: '16px', color: '#fff' }} />
-                    </a>
-                  </Dropdown>
+              <Header style={{
+                padding: 0,
+                background: '#001529',
+                height: '59px',
+                lineHeight: '59px',
+                color: '#fff',
+                display: 'flex',
+                justifyContent: 'space-between'
+              }}>
+                <Menu
+                    theme="dark"
+                    mode="horizontal"
+                    defaultSelectedKeys={['0']}
+                    items={leftMenuItems}
+                    style={{
+                      lineHeight: '59px',
+                      width: '30%',
+                      minWidth: '300px',
+                      borderRight: '1px solid #063158'
+                    }}
+                    onClick={onClick}
+                />
+
+                <div style={{
+                  flex: 1,
+                  textAlign: 'center',
+                  color: '#fff',
+                  fontSize: '27px',
+                  fontWeight: 'bold',
+                  padding: '0 20px'
+                }}>
+                  多场景作物病虫害预测系统
                 </div>
+
+                <Menu
+                    theme="dark"
+                    mode="horizontal"
+                    defaultSelectedKeys={['sub2']}
+                    items={rightMenuItems}
+                    style={{
+                      lineHeight: '59px',
+                      width: '30%',
+                      minWidth: '300px',
+                      borderLeft: '1px solid #063158'
+                    }}
+                    onClick={onClick}
+                />
+
+                <Dropdown menu={{ items, onClick }}>
+                  <a onClick={(e) => e.preventDefault()} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 20px',
+                    height: '100%',
+                    color: '#fff'
+                  }}>
+                    <SettingFilled style={{ fontSize: '16px' }} />
+                  </a>
+                </Dropdown>
               </Header>
           ) : (
               <div style={{ background: 'rgba(0, 21, 41, 0.9)', padding: '10px 0', display: 'flex', justifyContent: 'center' }}>
