@@ -1,30 +1,30 @@
 import 'leaflet/dist/leaflet.css';
-import React  from 'react'
-import ReactDOM from 'react-dom/client'
-import { ConfigProvider } from 'antd'
-// import 'antd/dist/antd.compact.css'
-import zhCN from 'antd/lib/locale/zh_CN'
-import { HashRouter as Router } from 'react-router-dom'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
+import { HashRouter } from 'react-router-dom'; // 使用HashRouter
 
-import App from './App.tsx'
-import './index.css'
+import App from './App';
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <Router>
-  <ConfigProvider locale={zhCN}
-      theme={{
-        token: {
-          // Seed Token，影响范围大
-          // colorPrimary: '#00b96b',
-          borderRadius: 2,
-  
-          // 派生变量，影响范围小
-          colorBgContainer: '#f6ffed',
-        },
-      }}
-  >
-    <App />
-  </ConfigProvider>
-  </Router>
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Root element not found');
 
-)
+ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+        <ConfigProvider
+            locale={zhCN}
+            theme={{
+                token: {
+                    borderRadius: 2,
+                    colorBgContainer: '#f6ffed',
+                },
+            }}
+        >
+            <HashRouter> {/* 这里使用HashRouter */}
+                <App />
+            </HashRouter>
+        </ConfigProvider>
+    </React.StrictMode>
+);
