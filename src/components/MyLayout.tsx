@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, PropsWithChildren } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -80,6 +80,12 @@ const rightMenuItems: MenuItem[] = [
   getItem('API接口服务', 'sub2', <TeamOutlined />, [
     getItem('Relief-F互相关性分析', '5'),
     getItem('t-检验', '6'),
+    getItem('特征优选数据集管理', 'feature-dataset'),
+    getItem('特征优选文件上传', 'feature-upload'),
+    getItem('Pearson相关性分析', 'pearson'),
+    getItem('模型训练', 'model-train'),
+    getItem('服务状态', 'service-status'),
+    getItem('网关状态', 'gateway-status'),
   ]),
   getItem('产品应用服务', 'sub3', <TeamOutlined />, [
     getItem('专题图制作', '7'),
@@ -103,11 +109,11 @@ const items: MenuProps['items'] = [
   { label: '记录', key: '5' },
 ];
 
-const MyLayout: React.FC = ({ children }) => {
+const MyLayout: React.FC<PropsWithChildren> = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [showSteps, setShowSteps] = useState(false);
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token,
   } = theme.useToken();
 
   const steps = [
@@ -123,13 +129,66 @@ const MyLayout: React.FC = ({ children }) => {
   const onClick: MenuProps['onClick'] = ({ key }) => {
     message.info(`Click on item ${key}`);
     if (key === '1') {
-      setShowSteps(true);
-    } else {
+      navigate('/cropmodeling');
       setShowSteps(false);
+      return;
     }
-
+    if (key === '0') {
+      navigate('/');
+      setShowSteps(false);
+      return;
+    }
+    if (key === '5') {
+      navigate('/apirelieff');
+      return;
+    }
+    if (key === '6') {
+      navigate('/apitest');
+      return;
+    }
+    setShowSteps(false);
     if (key === '14') {
       navigate('/usercenter');
+    }
+    if (key === '10') {
+      navigate('/modelreport');
+      return;
+    }
+    if (key === '11') {
+      navigate('/heatmapanalysis');
+      return;
+    }
+    if (key === '12') {
+      navigate('/pathanalysis');
+      return;
+    }
+    if (key === '13') {
+      navigate('/swipemap');
+      return;
+    }
+    if (key === 'feature-dataset') {
+      navigate('/feature-dataset');
+      return;
+    }
+    if (key === 'feature-upload') {
+      navigate('/feature-upload');
+      return;
+    }
+    if (key === 'pearson') {
+      navigate('/pearson');
+      return;
+    }
+    if (key === 'model-train') {
+      navigate('/model-train');
+      return;
+    }
+    if (key === 'service-status') {
+      navigate('/service-status');
+      return;
+    }
+    if (key === 'gateway-status') {
+      navigate('/gateway-status');
+      return;
     }
   };
 
@@ -204,54 +263,7 @@ const MyLayout: React.FC = ({ children }) => {
           )}
 
           <Content style={{ margin: 0, padding: 0, height: 'calc(100vh - 59px)' }}>
-            <div
-                style={{
-                  padding: 0,
-                  minHeight: 360,
-                  background: colorBgContainer,
-                  borderRadius: borderRadiusLG,
-                  height: '100%',
-                  position: 'relative',
-                }}
-            >
-              <MapContainer center={[30.181594, 120.031156]} zoom={17} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
-                <LayersControl position="topright">
-                  <LayersControl.BaseLayer checked name="Esri 卫星图">
-                    <TileLayer
-                        attribution='&copy; OpenStreetMap contributors'
-                        url="https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                    />
-                  </LayersControl.BaseLayer>
-
-                  <LayersControl.Overlay checked name="MODIS Land Cover">
-                    <TileLayer
-                        url="https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/MODIS_Terra_NDVI/default/2023-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png"
-                        attribution="NASA GIBS"
-                        opacity={0.6}
-                    />
-                  </LayersControl.Overlay>
-
-                  <LayersControl.Overlay checked name="病虫害监测点">
-                    {pestPoints.map(({ id, position, severity, description }) => (
-                        <React.Fragment key={id}>
-                          <Marker position={position}>
-                            <Popup>{description}</Popup>
-                          </Marker>
-                          <CircleMarker
-                              center={position}
-                              radius={severity * 4}
-                              pathOptions={{ color: 'red', fillColor: 'red', fillOpacity: 0.5 }}
-                          />
-                        </React.Fragment>
-                    ))}
-                  </LayersControl.Overlay>
-                </LayersControl>
-              </MapContainer>
-
-              <MyDrawerLeft />
-              <MyDrawerRight />
-              <MyFloatButton />
-            </div>
+            {children}
           </Content>
         </Layout>
       </Layout>
