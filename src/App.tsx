@@ -3,6 +3,20 @@ import { Routes, Route, Outlet } from 'react-router-dom';
 import MyLayout from './components/MyLayout';
 import MyMap from './components/MyMap';
 import UserCenter from './pages/UserCenter';
+import ApiReliefF from './pages/ApiReliefF';
+import ApiTTest from './pages/ApiTTest';
+import HomePage from './pages/HomePage';
+import CropModeling from './pages/CropModeling';
+import ModelReport from './pages/ModelReport';
+import HeatmapAnalysis from './pages/HeatmapAnalysis';
+import PathAnalysis from './pages/PathAnalysis';
+import SwipeMap from './pages/SwipeMap';
+import FeatureOptimizationDataSetPage from './pages/FeatureOptimizationDataSetPage';
+import FeatureOptimizationUpload from './pages/FeatureOptimizationUpload';
+import ApiPearson from './pages/ApiPearson';
+import ModelTrainPage from './pages/ModelTrainPage';
+import ServiceStatusPage from './pages/ServiceStatusPage';
+import GatewayStatusPage from './pages/GatewayStatusPage';
 import './App.css';
 
 function App() {
@@ -19,10 +33,27 @@ function App() {
                 }
             >
                 {/* 默认主页 - 显示地图 */}
-                <Route index element={<MyMap />} />
+                <Route index element={<HomePage />} />
 
                 {/* 用户中心页面 */}
                 <Route path="usercenter" element={<UserCenter />} />
+                {/* API接口服务子页面 */}
+                <Route path="apirelieff" element={<ApiReliefF />} />
+                <Route path="apitest" element={<ApiTTest />} />
+                {/* 作物病虫害建模页面 */}
+                <Route path="cropmodeling" element={<CropModeling />} />
+                {/* 建模报告页面 */}
+                <Route path="modelreport" element={<ModelReport />} />
+                {/* 产品交互分析子页面 */}
+                <Route path="heatmapanalysis" element={<HeatmapAnalysis />} />
+                <Route path="pathanalysis" element={<PathAnalysis />} />
+                <Route path="swipemap" element={<SwipeMap />} />
+                <Route path="feature-dataset" element={<FeatureOptimizationDataSetPage />} />
+                <Route path="feature-upload" element={<FeatureOptimizationUpload />} />
+                <Route path="pearson" element={<ApiPearson />} />
+                <Route path="model-train" element={<ModelTrainPage />} />
+                <Route path="service-status" element={<ServiceStatusPage />} />
+                <Route path="gateway-status" element={<GatewayStatusPage />} />
             </Route>
 
             {/* 404处理 */}
