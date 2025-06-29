@@ -17,6 +17,8 @@ import ApiPearson from './pages/ApiPearson';
 import ModelTrainPage from './pages/ModelTrainPage';
 import ServiceStatusPage from './pages/ServiceStatusPage';
 import GatewayStatusPage from './pages/GatewayStatusPage';
+import DataUpload from './pages/DataUpload';
+import DataPreprocess from './pages/DataPreprocess';
 import './App.css';
 
 function App() {
@@ -54,6 +56,8 @@ function App() {
                 <Route path="model-train" element={<ModelTrainPage />} />
                 <Route path="service-status" element={<ServiceStatusPage />} />
                 <Route path="gateway-status" element={<GatewayStatusPage />} />
+                <Route path="data-upload" element={<DataUpload />} />
+                <Route path="data-preprocess" element={<DataPreprocess />} />
             </Route>
 
             {/* 404处理 */}

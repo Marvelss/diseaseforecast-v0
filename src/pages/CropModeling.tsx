@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Upload, Button, Radio, message, Alert, Typography } from 'antd';
+import { Upload, Button, Radio, message, Alert, Typography, InputNumber, Input, Select, Form } from 'antd';
 import { UploadOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { apiRequest, uploadFile } from '../api';
 
@@ -29,6 +29,10 @@ const CropModeling: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<string>('');
+  const [indexType, setIndexType] = useState<string>('NDVI');
+  const [redBand, setRedBand] = useState<number>(4);
+  const [nirBand, setNirBand] = useState<number>(5);
+  const [outputName, setOutputName] = useState<string>('NDVI_输出.tif');
 
   // 上传控件change
   const handleFileChange = (key: string, { fileList }: any) => {
@@ -46,14 +50,24 @@ const CropModeling: React.FC = () => {
           setLoading(false);
           return;
         }
-        // 假设后端支持单文件上传接口
-        const res = await uploadFile('/api/feature-calc/ndvi', ndviFile[0].originFileObj);
-        if (!res || typeof res !== 'object') {
-          message.error('后端未返回有效JSON，请联系后端开发检查接口返回。');
-          setLoading(false);
-          return;
+        const formData = new FormData();
+        formData.append('file', ndviFile[0].originFileObj);
+        formData.append('indexType', indexType);
+        formData.append('redBand', redBand.toString());
+        formData.append('nirBand', nirBand.toString());
+        formData.append('outputName', outputName);
+        const res = await apiRequest<any>('/api/feature-calc/ndvi', {
+          method: 'POST',
+          body: formData,
+          headers: {},
+        });
+        if (res && res.success) {
+          setResult(res.data || res.msg || '计算成功');
+        } else {
+          message.error(res?.msg || '计算失败');
         }
-        setResult(res.data || '计算成功');
+        setLoading(false);
+        return;
       } else {
         // 校验必需项
         if (
@@ -74,25 +88,19 @@ const CropModeling: React.FC = () => {
         spatialFiles.grow.forEach((f: any) => formData.append('grow', f.originFileObj));
         spatialFiles.temp.forEach((f: any) => formData.append('temp', f.originFileObj));
         formData.append('coord', spatialFiles.coord[0].originFileObj);
-        // 假设后端支持多文件上传接口
-        const res = await fetch('/api/feature-calc/spatial', {
+        
+        // 使用统一的API请求函数
+        const res = await apiRequest<any>('/api/feature-calc/spatial', {
           method: 'POST',
           body: formData,
+          headers: {} // 不设置Content-Type，让浏览器自动设置multipart/form-data
         });
-        let data = null;
-        try {
-          // 检查响应类型和内容
-          const contentType = res.headers.get('content-type') || '';
-          if (res.ok && contentType.includes('application/json')) {
-            data = await res.json();
-          }
-        } catch {}
-        if (!data) {
-          message.error('后端未返回有效JSON，请联系后端开发检查接口返回。');
-          setLoading(false);
-          return;
+        
+        if (res && res.success) {
+          setResult(res.data || res.msg || '计算成功');
+        } else {
+          message.error(res?.msg || '计算失败');
         }
-        setResult(data.data || '计算成功');
       }
     } catch (e: any) {
       message.error('计算失败: ' + (e.message || e.toString()));
@@ -114,23 +122,39 @@ const CropModeling: React.FC = () => {
       />
       {selectedMethod === 'ndvi' && (
         <div style={{ marginBottom: 32 }}>
-          <Alert
-            type="info"
-            showIcon
-            icon={<InfoCircleOutlined />}
-            message={<b>方法介绍</b>}
-            description={<div>上传一个遥感影像.tif文件，自动计算植被指数（如NDVI）。</div>}
-            style={{ marginBottom: 16 }}
-          />
-          <Upload
-            fileList={ndviFile}
-            onChange={info => handleFileChange('ndvi', info)}
-            beforeUpload={() => false}
-            accept=".tif"
-            maxCount={1}
-          >
-            <Button icon={<UploadOutlined />}>上传.tif文件</Button>
-          </Upload>
+          <Form layout="vertical">
+            <Form.Item label="植被指数">
+              <Select value={indexType} onChange={setIndexType} style={{ width: 120 }}>
+                <Select.Option value="NDVI">NDVI</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="输入文件">
+              <Upload
+                fileList={ndviFile}
+                onChange={info => {
+                  handleFileChange('ndvi', info);
+                  if (info.fileList.length > 0) {
+                    const name = info.fileList[0].name.replace(/\.tif$/i, '');
+                    setOutputName(`NDVI_${name}.tif`);
+                  }
+                }}
+                beforeUpload={() => false}
+                accept=".tif"
+                maxCount={1}
+              >
+                <Button icon={<UploadOutlined />}>上传.tif文件</Button>
+              </Upload>
+            </Form.Item>
+            <Form.Item label="红波段对应的波段数">
+              <InputNumber min={1} value={redBand} onChange={v => setRedBand(Number(v))} />
+            </Form.Item>
+            <Form.Item label="近红外波段对应的波段数">
+              <InputNumber min={1} value={nirBand} onChange={v => setNirBand(Number(v))} />
+            </Form.Item>
+            <Form.Item label="输出文件名称">
+              <Input value={outputName} onChange={e => setOutputName(e.target.value)} />
+            </Form.Item>
+          </Form>
         </div>
       )}
       {selectedMethod === 'spatial' && (

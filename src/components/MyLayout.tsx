@@ -71,7 +71,10 @@ function getItem(
 
 const leftMenuItems: MenuItem[] = [
   getItem('主页', '0', <BorderInnerOutlined />),
-  getItem('作物病虫害建模', '1', <PieChartOutlined />),
+  getItem('作物病虫害建模', '1', <PieChartOutlined />, [
+    getItem('原始数据上传', 'data-upload'),
+    getItem('数据预处理', 'data-preprocess'),
+  ]),
   getItem('模型应用', '2', <DesktopOutlined />),
   getItem('气象情景模拟与模型评价', '3', <UserOutlined />),
 ];
@@ -188,6 +191,16 @@ const MyLayout: React.FC<PropsWithChildren> = ({ children }) => {
     }
     if (key === 'gateway-status') {
       navigate('/gateway-status');
+      return;
+    }
+    if (key === 'data-upload') {
+      navigate('/data-upload');
+      setShowSteps(false);
+      return;
+    }
+    if (key === 'data-preprocess') {
+      navigate('/data-preprocess');
+      setShowSteps(false);
       return;
     }
   };
